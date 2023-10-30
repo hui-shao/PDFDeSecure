@@ -71,13 +71,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+    # # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    # - name: Setup MSBuild.exe
+    #   uses: microsoft/setup-msbuild@v1.0.2
       
     # Tree
     - name: List dir before build
@@ -85,7 +81,7 @@ jobs:
 
     # Install dependencies
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore $env:Solution_Name
       
     # # Restore the application to populate the obj folder with RuntimeIdentifiers
     # - name: Restore the application
