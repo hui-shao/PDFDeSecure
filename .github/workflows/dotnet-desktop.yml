@@ -89,14 +89,23 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
+    # Zip 
+    - name: Zip Release
+      uses: TheDoctor0/zip-release@0.7.5
+      with:
+        # Filename for archive
+        filename: "PDFDeSecure_Release.zip"
+        # Base path for archive files
+        path: PDFDeSecure/bin/Release
+
     # Tree
-    - name: List dir after build
+    - name: List dir after build and zip
       run: tree /f
 
-    # # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    # - name: Upload build artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: PDFDeSecure
-    #     path: PDFDeSecure/build/release
-    #     if-no-files-found: error
+    # Upload theartifacts: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: PDFDeSecure
+        path: PDFDeSecure_Release.zip
+        if-no-files-found: error
