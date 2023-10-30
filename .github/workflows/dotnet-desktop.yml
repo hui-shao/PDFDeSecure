@@ -78,15 +78,19 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test
-
+      
+    # Tree
+    - name: List dir before build
+      run: tree /f
+      
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /v:d /t:Restore /p:OutDir="build\release";Configuration=$env:Configuration
+      run: msbuild $env:Solution_Name /v:d /t:Restore /p:OutDir="build\release";Configuration=Release
       env:
         Configuration: ${{ matrix.configuration }}
 
     # Tree
-    - name: List dir
+    - name: List dir after build
       run: tree /f
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
