@@ -82,21 +82,29 @@ jobs:
     # Tree
     - name: List dir before build
       run: tree /f
+
+    # Install dependencies
+    - name: Install dependencies
+      run: dotnet restore
       
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /v:d /t:Restore /p:OutDir="build\release" /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+    # # Restore the application to populate the obj folder with RuntimeIdentifiers
+    # - name: Restore the application
+    #   run: msbuild $env:Solution_Name /v:d /t:Restore /p:OutDir="build\release" /p:Configuration=$env:Configuration
+    #   env:
+    #     Configuration: ${{ matrix.configuration }}
+
+    # Install dependencies
+    - name: Build
+      run: dotnet build $env:Solution_Name --configuration Release
 
     # Tree
     - name: List dir after build
       run: tree /f
 
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: PDFDeSecure
-        path: PDFDeSecure/build/release
-        if-no-files-found: error
+    # # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    # - name: Upload build artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: PDFDeSecure
+    #     path: PDFDeSecure/build/release
+    #     if-no-files-found: error
